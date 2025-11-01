@@ -7,7 +7,7 @@ const MainLayout = () => {
     return (
         <div className="flex flex-col min-h-screen">
             <NavBar/>
-            <div className='flex-1'>
+            <div className='w-full mx-auto flex-1'>
                 <Outlet/>
             </div>
             <Footer/>

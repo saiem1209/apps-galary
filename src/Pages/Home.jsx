@@ -1,12 +1,14 @@
 import React from 'react';
-import { Link, useLoaderData } from 'react-router';
+import { Link} from 'react-router';
 import AppCard from '../Components/AppCard';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGooglePlay } from "@fortawesome/free-brands-svg-icons";
 import { faAppStoreIos } from "@fortawesome/free-brands-svg-icons";
+import useApp from '../hook/useApp';
 
 const Home = () => {
-    const homedata = useLoaderData();
+    const {apps, loading, error} = useApp();
+    const homedata = apps.slice(0, 8)
     return (
         <div className="bg-gray-100">
             <div className="text-center sm:p-4 ">

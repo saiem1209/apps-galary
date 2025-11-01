@@ -4,18 +4,19 @@ import Apps from "../Pages/Apps";
 import MainLayout from "../Layouts/MainLayout";
 import Error from "../Pages/Error";
 import Installation from "../Pages/Installation";
+import AppDetails from "../Pages/AppDetails";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <MainLayout />,
-        errorElement: <Error/>,
+        errorElement: <Error />,
         hydrateFallbackElement: <p>loading....</p>,
         children: [
             {
                 index: true,
                 element: <Home />,
-                loader: ()=> fetch('./homeappsdata.json'),
+                loader: () => fetch('./homeappsdata.json'),
             },
             {
                 path: "/apps",
@@ -23,8 +24,13 @@ const router = createBrowserRouter([
             },
             {
                 path: "/installation",
-                element: <Installation />
+                element: <Installation />,
             },
+            {
+                path: "/apps/:id",
+                element: <AppDetails />,
+            },
+
         ]
     },
 
