@@ -15,9 +15,7 @@ const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <Home />,
-                loader: () => fetch('./homeappsdata.json'),
-            },
+                element: <Home />,            },
             {
                 path: "/apps",
                 element: <Apps />
