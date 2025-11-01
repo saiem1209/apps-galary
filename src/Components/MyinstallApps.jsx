@@ -1,12 +1,8 @@
 
-import React from "react";
-import { toast } from "react-toastify";
 
-const MyinstallApps = ({ install, onUninstall }) => {
+const MyinstallApps = ({ install, handleUninstall}) => {
 
-    const handleUninstall = () => {
-        toast.info(`${install.title} has been uninstalled!`);
-    };
+
 
     return (
         <div className="flex items-center justify-between bg-white rounded-xl border shadow p-4 hover:shadow-md transition">
@@ -27,7 +23,7 @@ const MyinstallApps = ({ install, onUninstall }) => {
 
 
             <button
-                onClick={handleUninstall}
+                onClick={()=>handleUninstall(install.id)}
                 className="bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium px-4 py-1 rounded-md"
             >
                 Uninstall

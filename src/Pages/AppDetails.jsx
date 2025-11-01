@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+
 import { useParams } from 'react-router';
 import useApp from '../hook/useApp';
-import { toast } from 'react-toastify';
+
 import {
     BarChart,
     Bar,
@@ -11,32 +11,39 @@ import {
     ResponsiveContainer,
     CartesianGrid,
 } from "recharts";
+import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 const AppDetails = () => {
     const { id } = useParams()
-    const { apps, loading, error } = useApp();
+    const [installed, setInstalled] = useState(false);
+
+    const { apps, loading} = useApp();
     const app = apps.find(a => String(a.id) === id)
     if (loading) return <p>loading...</p>
-    const{title, image} = app || {}
+    const { title, image } = app || {}
     const handleInstall = () => {
-      const existingList = JSON.parse(localStorage.getItem('applist'))
-      let updatedList = []
-      if (existingList) {
-        const isDuplicate = existingList.some(p => p.id === app.id)
-        if (isDuplicate) return alert('Sorry vai')
-        updatedList = [...existingList, app]
-      } else {
-        updatedList.push(app)
-      }
-      localStorage.setItem('applist', JSON.stringify(updatedList))
+        const existingList = JSON.parse(localStorage.getItem('applist'))
+        let updatedList = []
+        if (existingList) {
+            const isDuplicate = existingList.some(p => p.id === app.id)
+            if (isDuplicate) return alert('Already Installed')
+            updatedList = [...existingList, app]
+        } else {
+            updatedList.push(app)
+        }
+        localStorage.setItem('applist', JSON.stringify(updatedList))
+
+        setInstalled(true);
+        toast.success(`${app.title} installed successfully!`);
     }
 
 
     return (
         <div className="max-w-5xl mx-auto py-8 px-4 space-y-6">
-           
+
             <div className="flex flex-col md:flex-row items-center md:items-start gap-6 bg-white rounded-xl p-6 shadow">
-        
+
                 <img
                     src={image}
                     alt={title}
@@ -53,14 +60,19 @@ const AppDetails = () => {
                         <span>🏢 {app.companyName}</span>
                     </div>
 
-              
-                    <button className='btn' onClick={handleInstall}>
-                        Install
+
+                    <button
+                        onClick={handleInstall}
+                        disabled={installed}
+                        className={`px-6 py-2 rounded-lg text-white font-medium ${installed ? "bg-gray-400 cursor-not-allowed" : "bg-emerald-600 hover:bg-emerald-700"
+                            }`}
+                    >
+                        {installed ? "Installed ✅" : "Install"}
                     </button>
                 </div>
             </div>
 
-       
+
             <div className="bg-white p-6 rounded-xl shadow">
                 <h2 className="text-xl font-semibold mb-4">User Review Summary</h2>
                 <ResponsiveContainer width="100%" height={300}>
@@ -74,7 +86,7 @@ const AppDetails = () => {
                 </ResponsiveContainer>
             </div>
 
-         
+
             <div className="bg-white p-6 rounded-xl shadow space-y-3">
                 <h2 className="text-xl font-semibold">Description</h2>
                 <p className="text-gray-700 leading-relaxed">{app.description}</p>

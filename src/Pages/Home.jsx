@@ -7,7 +7,7 @@ import { faAppStoreIos } from "@fortawesome/free-brands-svg-icons";
 import useApp from '../hook/useApp';
 
 const Home = () => {
-    const {apps, loading, error} = useApp();
+    const {apps} = useApp();
     const homedata = apps.slice(0, 8)
     return (
         <div className="bg-gray-100">

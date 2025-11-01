@@ -1,16 +1,26 @@
 
 import React, { useEffect, useState } from "react";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import MyinstallApps from "../Components/MyinstallApps";
 
 const Installation = () => {
 
-const [applist, setApplist] = useState([])
-useEffect(() =>{
-    const savedList = JSON.parse(localStorage.getItem('applist'))
-    if(savedList) setApplist(savedList)
-}, [])
+    const [applist, setApplist] = useState([])
+    useEffect(() => {
+        const savedList = JSON.parse(localStorage.getItem('applist'))
+        if (savedList) setApplist(savedList)
+    }, [])
+
+    if (!applist.length) return <p>No Data Available</p>
+
+    const handleUninstall = (id) => {
+        let updatedList = (JSON.parse(localStorage.getItem('applist'))).filter(p => p.id!== id)
+        setApplist(updatedList)
+        localStorage.setItem('applist', JSON.stringify(updatedList))
+        toast.info("has been uninstalled!");
+
+    }
 
     return (
         <div className="bg-gray-100 text-center py-10">
@@ -46,6 +56,7 @@ useEffect(() =>{
             <div className="py-8 flex flex-col gap-5 p-10">
                 {applist.map((install) => (
                     <MyinstallApps
+                    handleUninstall={handleUninstall}
                         key={install.id}
                         install={install}
                     />

@@ -30,7 +30,7 @@ const NavBar = () => {
                     </div>
                     <div className='flex justify-between items-center'>
                         <img className="h-[30px] w-[30px]" src={logoImg} alt="" />
-                        <p className='font-semibold'>
+                        <p className='font-semibold text-xl'>
                             Hero.io
                         </p>
                     </div>
